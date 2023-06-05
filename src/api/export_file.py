@@ -13,41 +13,41 @@ router = BaseAPIRouter()
 
 @router.get("/")
 async def hello_world():
-    """服务健康检测"""
-    return "hello world"
+    """Service health testing"""
+    return "Hello world"
 
 
-@router.get("/fastapi_test/export", summary="导出数据示例", response_model=ResponseBaseModel)
+@router.get("/fastapi_test/export", summary="export file test", response_model=ResponseBaseModel)
 async def export_data():
     """
     curl --location --request GET '127.0.0.1:8888/fastapi_test/export'
     :return:
     """
     try:
-        # 设置表头列名和列宽
+        # Set header column names and column widths
         header_list = [
-            ['序号', 5],
-            ['姓名', 10],
-            ['性别', 10],
-            ['爱好', 10],
-            ['生日', 20]
+            ['Num', 5],
+            ['Name', 10],
+            ['Gender', 10],
+            ['Hobby', 10],
+            ['Birthday', 20]
         ]
         data_list = [
-            [1, '张三', '男', '篮球', '1994-12-15'],
-            [2, '李四', '女', '足球', '1994-04-03'],
-            [3, '王五', '男', '兵乓球', '1994-09-13'],
-            [4, '张三', '男', '篮球', '1994-12-15'],
-            [5, '李四', '女', '足球', '1994-04-03'],
-            [6, '王五', '男', '兵乓球', '1994-09-13'],
-            [7, '张三', '男', '篮球', '1994-12-15'],
-            [8, '李四', '女', '足球', '1994-04-03'],
-            [9, '王五', '男', '兵乓球', '1994-09-13'],
-            [10, '张三', '男', '篮球', '1994-12-15'],
-            [11, '李四', '女', '足球', '1994-04-03'],
-            [12, '王五', '男', '兵乓球', '1994-09-13'],
-            [13, '张三', '男', '篮球', '1994-12-15'],
-            [14, '李四', '女', '足球', '1994-04-03'],
-            [15, '王五', '男', '兵乓球', '1994-09-13'],
+            [1, 'Zhang san', 'Male', 'Basketball', '1994-12-15'],
+            [2, 'Li si', 'Female', 'Football', '1994-04-03'],
+            [3, 'Wang wu', 'Male', 'Ping Pong', '1994-09-13'],
+            [4, 'Zhang san', 'Male', 'Basketball', '1994-12-15'],
+            [5, 'Li si', 'Female', 'Football', '1994-04-03'],
+            [6, 'Wang wu', 'Male', 'Ping Pong', '1994-09-13'],
+            [7, 'Zhang san', 'Male', 'Basketball', '1994-12-15'],
+            [8, 'Li si', 'Female', 'Football', '1994-04-03'],
+            [9, 'Wang wu', 'Male', 'Ping Pong', '1994-09-13'],
+            [10, 'Zhang san', 'Male', 'Basketball', '1994-12-15'],
+            [11, 'Li si', 'Female', 'Football', '1994-04-03'],
+            [12, 'Wang wu', 'Male', 'Ping Pong', '1994-09-13'],
+            [13, 'Zhang san', 'Male', 'Basketball', '1994-12-15'],
+            [14, 'Li si', 'Female', 'Football', '1994-04-03'],
+            [15, 'Wang wu', 'Male', 'Ping Pong', '1994-09-13'],
         ]
         d_obj = DownloadFile(header_list, data_list)
         return d_obj.get_response(response_type=StreamingResponse)

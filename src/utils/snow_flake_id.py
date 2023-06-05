@@ -62,7 +62,7 @@ class SnowFlakeID(metaclass=Singleton):
     def get_id(self):
         timestamp = self._gen_timestamp()
         if timestamp < self.last_timestamp:
-            logging.error(f"clock is moving backwards. Rejecting requests until {self.last_timestamp}")
+            logging.error(f"Clock is moving backwards. Rejecting requests until {self.last_timestamp}")
             raise InvalidSystemClock
         elif timestamp == self.last_timestamp:
             self.sequence = (self.sequence + 1) & SEQUENCE_MASK

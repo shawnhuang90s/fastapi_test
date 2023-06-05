@@ -23,11 +23,11 @@ class RespDurationRoute(APIRoute):
         async def custom_route_handler(request: Request) -> Response:
             REQUEST_ID_CTX.set(SnowFlakeID().get_id())
             req_body = await request.body()
-            logging.info(f"request_id: {REQUEST_ID_CTX.get()}")
-            logging.info(f"request_url: {request.url}")
-            logging.info(f'request_headers: {request.headers}')
+            logging.info(f"Request ID: {REQUEST_ID_CTX.get()}")
+            logging.info(f"Request url: {request.url}")
+            logging.info(f'Request Headers: {request.headers}')
             if not isinstance(req_body, bytes):
-                logging.info(f"request_body: {req_body.decode('utf-8')}")
+                logging.info(f"Request Body: {req_body.decode('utf-8')}")
 
             before = int(time.time() * 1000)
             try:
@@ -38,7 +38,7 @@ class RespDurationRoute(APIRoute):
                 raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR)
             finally:
                 duration = int(time.time() * 1000) - before
-                logging.info(f'request spend time: {duration}ms.')
+                logging.info(f'Request spend time: {duration}ms.')
 
         return custom_route_handler
 

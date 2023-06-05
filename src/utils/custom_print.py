@@ -16,7 +16,7 @@ def custom_print(*args):
     sys.stdout.write(f'{file_name}:{line}  {time.strftime("%H:%M:%S")}  \033[0;94m{"".join(args)}\033[0m\n')
 
 
-print = custom_print  # 猴子补丁
+print = custom_print  # Monkey patch
 
 
 if __name__ == '__main__':

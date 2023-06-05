@@ -22,7 +22,7 @@ class Http:
                 elapsed = asyncio.get_running_loop().time() - trace_config_ctx.start
                 real_url = str(params.response.real_url)
                 msg = {}
-                msg["enter_req_name"] = "fastapi_test_request_index"
+                msg["enter_req_name"] = "Fastapi_test_request_index"
                 msg["enter_req_url"] = str(params.url)
                 msg["enter_req_status"] = params.response.status
                 msg["enter_req_elapsed"] = elapsed

@@ -56,7 +56,8 @@ def init_logging_config(path=''):
                 'formatter': 'json'
             }
         },
-        # 本地可以添加终端日志输出显示，测试服和线上可以去掉 console 的配置信息
+        # Self testing can add terminal log output display
+        # and test servers and formal servers generally need to remove console configuration information
         'loggers': {
             '': {
                 'handlers': ['console', 'root', 'root_json'],

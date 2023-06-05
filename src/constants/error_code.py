@@ -6,13 +6,13 @@ from models.common_model import ErrorCode
 
 class CodeConst:
     """
-    错误码及提示信息
-    提示信息中 error_msg 是通用的，tip_msg 是自定义的
-    1 开头的错误码代表客户端错误
-    2 开头的错误码代表服务器内部错误
-    3 开头的错误码代表第三方服务错误
+    Error codes and prompt information
+    Error in prompt error_msg is universal, tip_msg is customized
+    The error code starting with 1 represents a client error
+    The error code starting with 2 represents an internal error in the server
+    The error code starting with 3 represents a third-party service error
     """
-    B2002 = ("2002", "导出数据失败")
+    B2002 = ("2002", "Failed to export excel file.")
 
     def __init__(self):
         self.check_duplicate_code()
@@ -20,20 +20,21 @@ class CodeConst:
     @classmethod
     def check_duplicate_code(cls):
         """
-        校验新增错误码时是否与当前存在的重复
-        新增时必须类似 ("1001", "Client Error")，并且每个元素都不能重复，包括 error code 和 error msg
+        Verify if the newly added error code is a duplicate of the current one
+        When adding, it must be similar to ("1001", "Client Error")
+        And each element cannot be duplicated, including error code and error msg
         """
         exist_values = set()
         for k,v in cls.__dict__.items():
             check_l = [k.startswith("A"), k.startswith("B"), k.startswith("C")]
             if any(check_l):
                 if not isinstance(v, tuple):
-                    raise Exception("错误码或错误提示信息缺失.")
+                    raise Exception("Missing error code or error message.")
                 if len(v) != 2:
-                    raise Exception("只需要错误码和错误提示信息.")
+                    raise Exception("All you need is an error code and error message.")
                 exist_value = [v[0] in exist_values, v[1] in exist_values]
                 if any(exist_value):
-                    raise Exception("错误码或错误提示信息已存在.")
+                    raise Exception("Error code or error message already exists.")
                 else:
                     exist_values.add(v[0])
                     exist_values.add(v[1])

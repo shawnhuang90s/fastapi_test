@@ -15,26 +15,27 @@ class DownloadFile:
 
     def __init__(self, header_list: List[list], data_list: List, encoding: str="utf-8") -> None:
         """
-        初始化，关于颜色的选择参考：from xlwt.Style import _colour_map_text
-        :param header_list: 表头列名列表
-            例1：默认列宽
+        Reference for color selection -> from xlwt.Style import _colour_map_text
+        :param header_list: List of header column names
+            Example 1: Default column width
             header_list = [
-                ['序号'],  # 表格第0列[此列表头名称]
-                ['姓名'],
-                ['性别'],
-                ['爱好'],
-                ['生日']
+                ['Num'],  #  Column 0 of the table [header name of this column]
+                ['Name'],
+                ['Gender'],
+                ['Hobby'],
+                ['Birthday']
             ]
-            例2：自定义列宽（列宽值为 int 类型，比如 10 表示列宽为 10 个英文字符长度）
+            Example 2: Custom column width, column width value is of type int
+                       for example, 10 represents a column width of 10 English characters in length
             header = [
-                ['序号', 5],   # 表格第0列[此列表头名称,列宽]
-                ['姓名', 10],  # 表格第1列[此列表头名称,列宽]
-                ['性别', 10],
-                ['爱好', 10],
-                ['生日', 20]
+                ['Num', 5],   # Column 0 of the table [header name, column width]
+                ['Name', 10],  # Column 1 of the table [header name, column width]
+                ['Gender', 10],
+                ['Hobby', 10],
+                ['Birthday', 20]
             ]
-        :param data_list: 要保存到表中的数据
-        :param encoding: 字符编码
+        :param data_list: The data to be saved to the table
+        :param encoding: Character encoding
         """
         self.header_list = header_list
         self.data_list = data_list
@@ -45,10 +46,10 @@ class DownloadFile:
         fore_colour: str="pattern: pattern solid, fore_colour pale_blue"
     ) -> Tuple:
         """
-        设置表头表体的对齐方式和背景颜色
-        :param ali_horiz: 水平居中
-        :param ali_vert: 垂直居中
-        :param fore_colour: 背景颜色，默认是蓝色
+        Set the alignment and background color of the header and body
+        :param ali_horiz: Horizontally
+        :param ali_vert: Vertical center
+        :param fore_colour: Background color, default to blue
         :return:
         """
         style_header = xlwt.easyxf(f"{fore_colour};{ali_horiz};{ali_vert}")
@@ -57,30 +58,31 @@ class DownloadFile:
 
     def set_row_height(self, sheet, row_num: int, height: int=20*20) -> None:
         """
-        设置某行的行高
-        :param row_num: 第几行，0 表示第一行（表头）
+        Set the height of a row
+        :param row_num: What is the first row, where 0 represents the first row (header)
         :return:
         """
-        sheet.row(row_num).height_mismatch = True  # 表示当前行单独设置
-        sheet.row(row_num).height = height  # 具体行高
+        sheet.row(row_num).height_mismatch = True  # Indicates that the current row is set separately
+        sheet.row(row_num).height = height  # Specific row height
 
     def set_header(self, sheet, style_header) -> None:
         """
-        设置表头及数据写入
-        :param sheet: 表对象
+        Set header and data writing
+        :param sheet:
         :return:
         """
         for col in self.header_list:
             sheet.write(0, self.header_list.index(col), str(col[0]), style_header)
-            # 如果有自定义列宽
+            # If there is a custom column width
             if len(col) == 2:
-                sheet.col(self.header_list.index(col)).width = 256 * col[1]  # 256 是基数，col[1] 代表英文字符数量
+                # 256 is the cardinal number, col[1] represents the number of English characters
+                sheet.col(self.header_list.index(col)).width = 256 * col[1]
         self.set_row_height(sheet, 0)
 
     def set_body(self, sheet, style_body) -> None:
         """
-        设置表体及数据写入
-        :param sheet: 表对象
+        Setting Table Body and Data Writing
+        :param sheet:
         :return:
         """
         row_index = 1
@@ -88,20 +90,21 @@ class DownloadFile:
             self.set_row_height(sheet, row_index)
             for content in self.header_list:
                 col_index = self.header_list.index(content)
-                # 第 row_index 行第 col_index 列写入的数据及样式
                 sheet.write(row_index, col_index, row_data[col_index], style_body)
             row_index += 1
 
     def set_frozen(self, sheet, frozen_row: int=1, frozen_col: int=0):
         """
-        设置冻结行列，通俗解释即比如使用鼠标滚轮查看数据时，被冻结的行列固定着，而没冻结的则随着滚轮上下移动
-        :param frozen_row: 冻结行（默认首行）
-        :param frozen_col: 冻结列（默认不冻结）
+        Set frozen rows and columns, which is commonly explained as follows
+        When using the mouse scroll wheel to view data, the frozen rows and columns are fixed
+        While the unfrozen rows and columns move up and down with the scroll wheel
+        :param frozen_row: Freeze rows (default first row)
+        :param frozen_col: Freeze column (default not frozen)
         :return:
         """
-        sheet.set_panes_frozen('1')  # 设置冻结为真（是下面两个设置的前提条件）
-        sheet.set_horz_split_pos(frozen_row)  # 冻结前 n 行
-        sheet.set_vert_split_pos(frozen_col)  # 冻结前 n 列
+        sheet.set_panes_frozen('1')  # Setting freeze to true (a prerequisite for the following two settings)
+        sheet.set_horz_split_pos(frozen_row)  # Freeze the first n rows
+        sheet.set_vert_split_pos(frozen_col)  # Freeze the first n columns
 
     def data_input(self, sheet_name="sheet"):
         """Write data to the table"""
@@ -114,9 +117,9 @@ class DownloadFile:
 
     def save_file(self, file_name: str="default.xls"):
         """
-        写入数据到新表中
-        :param file_name: 新建的 excel 文件名
-        :param sheet_name: 新建的表名
+        Write data to a new table
+        :param file_name: New excel file name
+        :param sheet_name: New table name
         :return:
         """
         work_book = self.data_input()
@@ -129,7 +132,7 @@ class DownloadFile:
 
     @staticmethod
     def create_dirs():
-        """确定项目中有保存 excel 文件的目录"""
+        """Confirm that there is a directory for saving excel files in the project"""
         file_dir = f"{BASE_PATH}/src/files/"
         os.makedirs(file_dir, exist_ok=True)
 
@@ -137,18 +140,22 @@ class DownloadFile:
 
     def get_response(self, response_type):
         """
-        选择不同的方式导出Excel文件，如果是数据流，使用StreamingResponse；如果是文件下载，选择 FileResponse
+        Choose different ways to export Excel files
+        If it is a data stream, use StreamingResponse
+        If it is a file download, select FileResponse
         """
         if response_type == FileResponse:
-            # 文件名不仅是保存到 files/ 目录下的文件名，也是输出到前端的文件名
+            # The file name is not only the file name saved in the files/directory
+            # But also the file name output to the front-end
             today = get_str_by_timestamp(int(time.time()) * 1000, format_str="%Y-%m-%d")
             file_name = f"export_data_{today}.xls"
             new_file_path = self.save_file(file_name=file_name)
             return FileResponse(
                 path=new_file_path,
                 filename=file_name,
-                # Excel 文件发送成功后，顺便直接在 files/ 目录下自动删除
-                # 如果下面这行代码被注释掉，文件会保留在 files/ 目录下
+                # After successfully sending the Excel file
+                # It will be automatically deleted directly in the files/directory
+                # If the following line of code is commented out, the file will remain in the files/directory
                 background=BackgroundTask(lambda: os.remove(new_file_path))
             )
         elif response_type == StreamingResponse:
@@ -156,39 +163,38 @@ class DownloadFile:
             sio = BytesIO()
             work_book.save(sio)
             sio.seek(0)
-            # 组装头部
             headers = {
                 "content-type": "application/vnd.ms-excel",
                 "content-disposition": f'attachment;filename=download.xls'
             }
-            # 将浏览器作为流返回
+            # Return browser as stream 
             return StreamingResponse(sio, media_type='xls/xlsx', headers=headers)
 
 
 if __name__ == "__main__":
     header_list = [
-        ['序号', 5],
-        ['姓名', 10],
-        ['性别', 10],
-        ['爱好', 10],
-        ['生日', 20]
+        ['Num', 5],
+        ['Name', 10],
+        ['Gender', 10],
+        ['Hobby', 10],
+        ['Birthday', 20]
     ]
     data_list = [
-        [1, '张三', '男', '篮球', '1994-12-15'],
-        [2, '李四', '女', '足球', '1994-04-03'],
-        [3, '王五', '男', '兵乓球', '1994-09-13'],
-        [4, '张三', '男', '篮球', '1994-12-15'],
-        [5, '李四', '女', '足球', '1994-04-03'],
-        [6, '王五', '男', '兵乓球', '1994-09-13'],
-        [7, '张三', '男', '篮球', '1994-12-15'],
-        [8, '李四', '女', '足球', '1994-04-03'],
-        [9, '王五', '男', '兵乓球', '1994-09-13'],
-        [10, '张三', '男', '篮球', '1994-12-15'],
-        [11, '李四', '女', '足球', '1994-04-03'],
-        [12, '王五', '男', '兵乓球', '1994-09-13'],
-        [13, '张三', '男', '篮球', '1994-12-15'],
-        [14, '李四', '女', '足球', '1994-04-03'],
-        [15, '王五', '男', '兵乓球', '1994-09-13'],
+        [1, 'Zhang san', 'Male', 'Basketball', '1994-12-15'],
+        [2, 'Li si', 'Female', 'Football', '1994-04-03'],
+        [3, 'Wang wu', 'Male', 'Ping Pong', '1994-09-13'],
+        [4, 'Zhang san', 'Male', 'Basketball', '1994-12-15'],
+        [5, 'Li si', 'Female', 'Football', '1994-04-03'],
+        [6, 'Wang wu', 'Male', 'Ping Pong', '1994-09-13'],
+        [7, 'Zhang san', 'Male', 'Basketball', '1994-12-15'],
+        [8, 'Li si', 'Female', 'Football', '1994-04-03'],
+        [9, 'Wang wu', 'Male', 'Ping Pong', '1994-09-13'],
+        [10, 'Zhang san', 'Male', 'Basketball', '1994-12-15'],
+        [11, 'Li si', 'Female', 'Football', '1994-04-03'],
+        [12, 'Wang wu', 'Male', 'Ping Pong', '1994-09-13'],
+        [13, 'Zhang san', 'Male', 'Basketball', '1994-12-15'],
+        [14, 'Li si', 'Female', 'Football', '1994-04-03'],
+        [15, 'Wang wu', 'Male', 'Ping Pong', '1994-09-13'],
     ]
     d = DownloadFile(header_list, data_list)
-    d.save_file(file_name="测试文件.xls")
+    d.save_file(file_name="test_export_file.xls")
