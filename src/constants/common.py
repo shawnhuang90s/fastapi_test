@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # @Time: 2023/6/5 10:43
 import os
-from enum import Enum, IntEnum
 
 
 class ServerInfo:

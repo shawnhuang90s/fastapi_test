@@ -16,7 +16,6 @@ from constants.common import ServerInfo, Env
 def create_start_app_handler(app: FastAPI) -> Callable:
     async def start_app() -> None:
         pass
-
     return start_app
 
 
@@ -38,12 +37,13 @@ def init_middleware(app):
 
     app.add_middleware(
         TrustedHostMiddleware,
-        allow_hosts=["*"]
+        allowed_hosts=["*"]
     )
 
 
 def init_routers(app: FastAPI):
-    pass
+    from api.routers import router as test_router
+    app.include_router(test_router)
 
 
 def create_app() -> FastAPI:

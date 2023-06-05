@@ -6,7 +6,7 @@ import logging
 from typing import Dict
 import aiohttp
 
-from models.common_models import HttpResp
+from models.common_model import HttpResp
 
 
 class Http:
