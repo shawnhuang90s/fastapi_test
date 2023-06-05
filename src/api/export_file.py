@@ -11,6 +11,12 @@ from constants.error_code import CodeConst, error_code_msg
 router = BaseAPIRouter()
 
 
+@router.get("/")
+async def hello_world():
+    """服务健康检测"""
+    return "hello world"
+
+
 @router.get("/fastapi_test/export", summary="导出数据示例", response_model=ResponseBaseModel)
 async def export_data():
     """
