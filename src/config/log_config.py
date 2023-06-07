@@ -9,7 +9,6 @@ ROOT_LOG_PATH = "/data/logs"
 
 
 def init_logging_config(path=''):
-    """初始化日志配置"""
     root_path = Path(ROOT_LOG_PATH).joinpath(PROJECT_NAME)
     if path:
         root_path = root_path.joinpath(path)
@@ -57,7 +56,7 @@ def init_logging_config(path=''):
             }
         },
         # Self testing can add terminal log output display
-        # and test servers and formal servers generally need to remove console configuration information
+        # And test servers and formal servers generally need to remove console configuration information
         'loggers': {
             '': {
                 'handlers': ['console', 'root', 'root_json'],
