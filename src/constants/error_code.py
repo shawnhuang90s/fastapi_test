@@ -12,7 +12,18 @@ class CodeConst:
     The error code starting with 2 represents an internal error in the server
     The error code starting with 3 represents a third-party service error
     """
-    B2002 = ("2002", "Failed to export excel file.")
+    A1001 = ("1001", "Client error.")
+    A1002 = ("1002", "Login failed.")
+    A1003 = ("1003", "Failed to register new user.")
+    A1004 = ("1004", "Password reset failed.")
+    A1005 = ("1005", "Failed to update user permissions.")
+
+    B2001 = ("2001", "Service error.")
+    B2002 = ("2002", "Export data failed.")
+    B2003 = ("2003", "Failed to obtain time info.")
+    B2004 = ("2004", "Failed to obtain Redis info.")
+
+    C3001 = ("3001", "Third party service error.")
 
     def __init__(self):
         self.check_duplicate_code()
