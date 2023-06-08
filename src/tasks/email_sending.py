@@ -11,8 +11,8 @@ from config.redis_config import REDIS_CONN
 
 class SendEmail:
 
-    EMAIL_HOST_USER = "test@163.com"
-    EMAIL_AUTH_PWD = "test_smtp_code"  # AUTHORIZE CODE
+    EMAIL_HOST_USER = "shawnhuang90s@163.com"
+    EMAIL_AUTH_PWD = "JODBLDPXHFGCAQKP"
     EMAIL_HOST = "smtp.163.com"
     EMAIL_PORT = 465
 
@@ -77,7 +77,7 @@ class TimeTask:
 
     REDIS_NAME = "email_users"
     EMAIL_TAG = "This is a test..."
-    EMAIL_USER = "test@163.com"
+    EMAIL_USER = "shawnhuang90s@163.com"
 
     async def run(self):
         print(">>>>>>>>>> Run send email <<<<<<<<<<")
