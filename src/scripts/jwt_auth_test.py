@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 # @Time: 2023/6/8 9:52
+"""
+参考资料
+    https://zhuanlan.zhihu.com/p/388155597
+    https://www.cnblogs.com/puffer/p/16417064.html
+    https://blog.csdn.net/python2007cn/article/details/119640507
+"""
 import time
 import jwt
 from fastapi import HTTPException
