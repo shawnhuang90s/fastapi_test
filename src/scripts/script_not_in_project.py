@@ -202,7 +202,7 @@ def init_logging_config(path=''):
 async def test_process():
     try:
         host = ServiceConf.test_host
-        url = f"{host}/project_test/time_zone"
+        url = f"{host}/"
         async with Http() as http:
             res = await http.aio_get(url)
             logging.info(f"Test url: {url}, resp: {res.text}, status: {res.status}")
