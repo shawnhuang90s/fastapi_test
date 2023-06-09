@@ -63,5 +63,5 @@ def create_app() -> FastAPI:
 if __name__ == "__main__":
     app = create_app()
     logging.info("************************ System Start Running *************************")
-    logging.info(f"current env: {ServerInfo.ENV}, current port: {ServerInfo.PORT}")
+    logging.info(f"Current env: {ServerInfo.ENV}, current port: {ServerInfo.PORT}")
     uvicorn.run(app, host=ServerInfo.HOST, port=ServerInfo.PORT, loop="auto")

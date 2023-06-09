@@ -54,16 +54,16 @@ async def create_user(info: CreateUserResponseSchema):
             REDIS_CONN.hmset('email_users', {info.username: info.password})
         return SuccessResponseModel()
     except Exception as e:
-        logging.error(f'/fastapi_test/create_user error: {e}', exc_info=True)
+        logging.error(f'create_user error: {e}', exc_info=True)
         err_code_info = error_code_msg(CodeConst.B2001)
         return FailureResponseModel(**dict(err_code_info))
 
 
 @router.post("/fastapi_test/batch_create_user", summary='Batch create new users',
              response_model=SuccessResponseModel)
-async def get_users_info(
-    file: UploadFile = File(..., description='File for batch creation of users.'),
-    group_ids: Optional[str] = File(default='[]', description='Group IDs')
+async def batch_create_users(
+    file: UploadFile = File(..., description = 'File for batch creation of users.'),
+    group_ids: Optional[str] = File(default = '[]', description = 'Group IDs')
 ):
     """
     curl --location --request POST '127.0.0.1:8888/fastapi_test/batch_create_user' \
@@ -110,6 +110,6 @@ async def get_users_info(
         else:
             return SuccessResponseModel()
     except Exception as e:
-        logging.error(f'/fastapi_test/batch_create_user error: {e}', exc_info=True)
+        logging.error(f'batch_create_users error: {e}', exc_info=True)
         err_code_info = error_code_msg(CodeConst.B2001)
         return FailureResponseModel(**dict(err_code_info))
