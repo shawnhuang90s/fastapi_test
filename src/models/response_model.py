@@ -19,3 +19,13 @@ class FailureResponseModel(ResponseBaseModel):
 
 class SuccessResponseModel(ResponseBaseModel):
     success: bool = Field(default=True)
+
+
+class TimeInfosDetail(BaseModel):
+    current_time: str = Field(description="Current Indonesian time zone time")
+    set_time: str = Field(description="The time point of the set Indonesian time zone")
+    local_set_time: str = Field(description="Convert the set time point to the time zone of the server")
+
+
+class TimeInfos(ResponseBaseModel):
+    data: TimeInfosDetail = Field(default={}, description="Time zone time example")
